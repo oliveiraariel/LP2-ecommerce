@@ -1,102 +1,93 @@
 # AGENTS.md — Diretrizes para agentes de IA
 
-## 1. Contexto do projeto
+## 1. Contexto e estado do projeto
 
-Este repositório contém um projeto acadêmico de **Linguagem de Programação 2**, desenvolvido em aula na Fatec Bauru.
+Este repositório contém um e-commerce acadêmico desenvolvido na disciplina de **Linguagem de Programação 2**, na Fatec Bauru, usando **PHP procedural, HTML, MySQLi, MySQL/MariaDB e XAMPP**.
 
-É um e-commerce básico, implementado em **PHP procedural, HTML, MySQL/MariaDB e XAMPP**, dividido em áreas de comprador (`comp/`) e vendedor (`vend/`). A interface e a organização do código seguem o conteúdo ensinado pelo professor.
+O sistema possui área do comprador (`comp/`) e área do vendedor (`vend/`), com autenticação do vendedor, CRUD de produtos, carrinho e pesquisa.
 
-**Objetivo central: acrescentar somente as funcionalidades de categorias solicitadas, sem descaracterizar o projeto.**
+**A implementação das categorias foi concluída na cópia de trabalho da branch `feat/categorias`**, incluindo:
+- CRUD de categorias em `vend/categoria/`;
+- associação opcional de categoria aos produtos no cadastro e na edição;
+- nome da categoria nas listagens de produtos usando `LEFT JOIN`;
+- pesquisa do comprador por nome, categoria ou ambos;
+- correção visual das colunas da listagem administrativa.
 
-Consulte o `README.md` e leia os arquivos relevantes antes de propor alterações. O README descreve a versão existente; funcionalidades previstas não devem ser tratadas como implementadas.
+A integração dessa implementação à `main` é uma **operação de versionamento separada**, sujeita à confirmação de que todos os arquivos locais foram commitados e enviados ao repositório remoto. Não confundir documentação atualizada com código PHP já publicado no GitHub.
 
-## 2. Regras inegociáveis
+Consulte o `README.md`, `banco/sistema_estrutura.sql` e os arquivos PHP relevantes antes de trabalhar. Em caso de divergência entre documentação e código, verifique o estado real do checkout e informe a inconsistência.
 
-1. **Preservar o projeto original.** Nunca modificar, reescrever, fazer merge ou enviar commits para a branch `main`. Ela é a referência da versão original.
-2. **Trabalhar apenas na branch autorizada `feat/categorias`**, verificando a branch ativa antes de alterar arquivos. Não executar `git push --force`, `git reset --hard`, `git clean -fd` nem operações destrutivas sem autorização expressa.
-3. **Não alterar a aparência do sistema.** Preservar cores, fontes, imagens, cabeçalho, rodapé, menus, tabelas, textos, disposição dos elementos e navegação. Permitir apenas a inclusão discreta dos campos, seletores e links estritamente necessários à nova funcionalidade, seguindo o padrão visual existente.
-4. **Preservar a simplicidade acadêmica.** Utilizar PHP procedural, MySQLi e HTML de acordo com o estilo já empregado. Não introduzir frameworks, bibliotecas, gerenciadores de dependências, camadas de arquitetura ou padrões complexos sem autorização.
-5. **Não refatorar o código existente fora do escopo.** Não renomear pastas, reformatar arquivos inteiros, reescrever autenticação/sessões/carrinho ou fazer modernizações não solicitadas.
-6. **Não alterar o banco de dados original diretamente.** Antes de mudanças de esquema ou dados, confirmar qual banco de testes será usado, o backup existente e a estratégia de migração.
-7. **Nunca publicar dados sensíveis.** Não versionar dumps com contas, hashes de senhas, credenciais, cookies, dados pessoais ou configurações locais. Não copiar o backup privado `sistema.sql` para o repositório.
-8. **Nenhuma implementação sem aprovação.** Primeiro analisar e apresentar o plano; esperar autorização explícita do responsável pelo projeto antes de editar código ou banco.
+## 2. Princípios obrigatórios
 
-Estas regras valem igualmente para o orquestrador, agentes de frontend, backend, banco de dados, teste e quaisquer subagentes. O orquestrador deve repassá-las a todos e conferir seu cumprimento.
+1. **Prioridade às orientações do professor.** Preservar a organização original e aplicar os requisitos acadêmicos; quando houver várias soluções possíveis, preferir a mais simples compatível com as orientações recebidas.
+2. **Não modificar a aparência sem necessidade.** Manter imagens, fontes, cores, cabeçalho, rodapé, tabelas, textos e navegação, exceto alterações expressamente autorizadas e indispensáveis ao objetivo.
+3. **Manter a simplicidade do código.** Utilizar PHP procedural, HTML e MySQLi. Não introduzir frameworks, novas dependências, camadas arquiteturais ou refatorações amplas por iniciativa própria.
+4. **Respeitar o escopo autorizado.** Identificar o objetivo, localizar os arquivos necessários e atuar somente nos arquivos e operações pertinentes. Não modificar autenticação, sessões ou carrinho sem pedido específico.
+5. **Preservar dados e segredos.** Não publicar senhas, hashes, cookies, tokens, informações pessoais, configurações privadas ou dumps com dados. O backup privado `sistema.sql` não pode ser enviado ao repositório.
+6. **Isolar testes que alterem dados.** Não executar `INSERT`, `UPDATE`, `DELETE`, migrações ou exclusões no banco principal `sistema` sem autorização explícita. Confirmar a conexão com o banco de testes e manter backup.
+7. **Verificar antes de alterar.** Conferir `git status`, branch ativa e trabalho local não commitado. Não descartar modificações anteriores nem utilizar `git push --force`, `git reset --hard` ou `git clean -fd` sem autorização específica.
+8. **Preservar autonomia com supervisão.** O agente pode escolher arquivos, skills e técnicas adequadas ao objetivo autorizado; deve solicitar esclarecimento para decisões de negócio não definidas e aprovação antes de ações destrutivas ou fora do escopo.
 
-## 3. Escopo funcional autorizado para planejamento
+As regras aplicam-se ao OpenClaw, Adaptive AI Orchestrator, agentes especializados e qualquer trabalhador delegado.
 
-O requisito novo, **ainda não implementado**, consiste em:
+## 3. Política de branches e publicação
 
-- Criar cadastro, listagem, edição e exclusão de **categorias** na área do vendedor.
-- Associar cada produto a uma categoria por meio de **chave estrangeira** na tabela de produtos.
-- Permitir escolher a categoria ao cadastrar e alterar um produto.
-- Permitir pesquisa do comprador por **nome do produto**, **categoria** ou **ambos simultaneamente**.
-- Manter o funcionamento atual de login, sessão, listagem, CRUD de produtos e carrinho.
+- O commit inicial `03e3a8242bf018e514dea207e6f2a53cec188b00` identifica a versão original, recuperável pelo histórico Git; preservar essa referência e, na integração autorizada, registrar uma tag para facilitar sua recuperação.
+- A implementação das categorias foi desenvolvida em `feat/categorias`. Até a integração, manter novas alterações dessa entrega nessa branch, sem sobrescrever a `main`.
+- O responsável **autorizou preparar a integração da implementação concluída à `main`**, mas isso não autoriza ignorar verificações: primeiro confirmar arquivos locais, commits, sincronização com `origin/feat/categorias` e mudanças pendentes.
+- Uma integração à `main` deve ser explícita e revisada, preferencialmente por merge ou Pull Request sem reescrita do histórico. Não criar merges nem publicar alterações adicionais não solicitadas.
+- Depois de confirmar que a `main` contém toda a entrega e que a versão original está preservada, a branch temporária poderá ser excluída **somente mediante autorização do responsável**. Não excluir outras branches por suposição.
+- Para novos desenvolvimentos, criar uma branch própria quando apropriado. Não presumir que `feat/categorias` continuará existindo depois da entrega.
 
-A regra de exclusão de categorias com produtos associados e o tratamento de produtos preexistentes deverão ser propostos e aprovados **antes** da implementação. Não pressupor decisões de negócio não fornecidas.
+## 4. Funcionalidades e regras do domínio
 
-## 4. Procedimento obrigatório: análise antes de código
+- Categorias são cadastradas e mantidas na área do vendedor, reutilizando o padrão do CRUD de produtos.
+- A tabela `categoria` possui `categoria_id` e `categoria`; a tabela `prod` possui `id`, `nome`, `preco` e `categoria_id`.
+- `prod.categoria_id` é opcional (`NULL`) e referencia `categoria.categoria_id`.
+- A chave estrangeira possui `ON DELETE SET NULL`: excluir uma categoria **não exclui** produtos associados.
+- Os formulários de cadastro e edição de produtos oferecem a opção **Sem categoria**.
+- As listagens de produtos podem apresentar `Sem categoria` quando não houver associação. Usar `LEFT JOIN` para preservar produtos não classificados.
+- A busca do comprador admite nome, categoria ou ambos; quando os dois filtros são informados, combinar as condições em `WHERE` com `AND`.
+- Não adicionar restrição de nomes únicos de categorias sem novo requisito ou decisão explícita.
+- Manter intactos os fluxos originais de login e carrinho quando a tarefa não envolver essas funcionalidades.
 
-**Fase A — Somente leitura**
+O esquema versionado está em `banco/sistema_estrutura.sql` e **não contém os dados de produção**.
 
-1. Examinar a árvore do projeto e ler os PHP relevantes.
-2. Identificar os fluxos existentes de comprador, vendedor, autenticação, produtos, pesquisa e carrinho.
-3. Examinar a estrutura real do banco `sistema` em uma cópia de esquema disponibilizada pelo responsável. Não presumir colunas, tipos, constraints ou registros.
-4. Apresentar um relatório sucinto com: estado atual, arquivos impactados, arquivos novos necessários, proposta de relacionamento de categorias, compatibilidade com produtos existentes, riscos e testes previstos.
-5. Aguardar aprovação explícita.
+## 5. Procedimento de trabalho
 
-**Fase B — Implementação incremental, somente após aprovação**
+1. **Entender o pedido:** ler o estado atual, instruções pertinentes e código necessário; não exigir do responsável um roteiro técnico extenso quando o projeto e as skills puderem orientar a execução.
+2. **Analisar impactos:** considerar dependências, esquema do banco, preservação do visual e arquivos já modificados.
+3. **Tratar autorização:** tarefas de leitura não autorizam escrita; pedidos de implementação autorizam apenas as alterações necessárias dentro do escopo informado. Solicitar aprovação separada para operações sobre dados principais, publicação e exclusões.
+4. **Implementar incrementalmente:** preferir mudanças pequenas; usar consultas preparadas para entradas em SQL e `htmlspecialchars()` na saída HTML quando pertinente, sem refatorar o sistema inteiro.
+5. **Validar e relatar:** verificar sintaxe, diferenças Git, regressões e testes funcionais possíveis, distinguindo testes realmente executados daqueles ainda pendentes.
+6. **Não publicar automaticamente:** não executar `git commit`, `push`, `merge`, criar tag ou excluir branch sem solicitação expressa para a operação correspondente.
 
-1. Trabalhar em mudanças pequenas e rastreáveis, respeitando o escopo aprovado.
-2. Planejar primeiro a alteração do esquema em **banco de testes**, sem substituir o banco original.
-3. Implementar categorias na área do vendedor com os mesmos padrões simples dos formulários e menus existentes.
-4. Integrar a categoria às operações de produtos.
-5. Acrescentar os filtros de busca na área do comprador.
-6. Testar cada etapa antes de continuar. Não introduzir mudanças visuais ou estruturais não aprovadas.
-7. Antes de cada commit, apresentar resumo dos arquivos alterados, diferenças principais e testes realizados. Não realizar commits ou pushes sem autorização quando o responsável não os tiver solicitado.
-
-## 5. Pontos de atenção técnicos
-
-- Os nomes de tabelas no Linux podem diferenciar maiúsculas e minúsculas; no sistema atual há referências às tabelas `account` e `prod`.
-- Os caminhos existentes da aplicação pressupõem acesso por `/sistema/`. Preservar seu funcionamento no XAMPP.
-- A aplicação usa PHP procedural e consultas com MySQLi. Em qualquer SQL novo ou alterado, validar entradas e evitar injeção SQL com parâmetros preparados onde aplicável, **sem transformar isso em uma refatoração global**.
-- O carrinho utiliza cookies. Mudanças em categorias e filtros não devem interferir no comportamento atual do carrinho.
-- Não alterar a autenticação e o formato de hash existente como parte da implementação de categorias sem decisão específica do responsável.
-- Manter o idioma português nas telas e a nomenclatura compatível com o restante do projeto.
+O Adaptive pode selecionar skills e executar em `--single-unit` ou `--multi-agent` conforme a complexidade e a autorização. Nenhum desses modos substitui as regras de escopo, segurança ou validação. Para o modo multiagente, informar explicitamente `--project-root` do projeto.
 
 ## 6. Testes e critérios de aceitação
 
-Ao final das alterações aprovadas, verificar no ambiente de testes:
+Para mudanças funcionais, quando aplicáveis, verificar:
 
-- Login, sessão e logout do vendedor continuam funcionando.
-- Cadastro, listagem, edição e exclusão de produtos continuam funcionando.
-- Categorias podem ser cadastradas, listadas, editadas e excluídas conforme a regra aprovada.
-- Produto pode ser associado a uma categoria e ter sua categoria alterada.
-- Pesquisa por nome, por categoria e por ambos retorna os resultados corretos.
-- Produtos anteriores à alteração continuam acessíveis após a migração definida.
-- Carrinho continua adicionando, exibindo e removendo produtos.
-- As telas mantêm visual e navegação equivalentes aos originais, com apenas os novos controles previstos.
+- Login, validação de sessão e logout do vendedor.
+- Cadastro, listagem, edição e exclusão de produtos e categorias.
+- Associação e alteração da categoria de um produto, inclusive **Sem categoria**.
+- Exclusão de categoria mantendo os produtos e anulando o vínculo.
+- Exibição de produtos com e sem categoria na área do vendedor e do comprador.
+- Pesquisa sem filtros, por nome, por categoria e pelos dois critérios.
+- Preservação das funcionalidades de carrinho, aparência e navegação.
+- Sintaxe PHP (`php -l`) e integridade do patch (`git diff --check`), inclusive revisão de arquivos novos não rastreados.
+- Estado do Git antes e depois do trabalho (`git status` e arquivos alterados).
 
-Executar `php -l` nos PHP modificados, quando o ambiente permitir, e inspecionar `git diff` e `git diff --check`. Informar claramente quais testes foram efetivamente executados e quais permanecem pendentes. **Não declarar sucesso sem verificar.**
+O uso de `php -l` **não comprova** o funcionamento com MySQL ou a interface; testes de navegador e banco precisam ser registrados separadamente. Nunca afirmar que um teste foi realizado sem evidência.
 
-## 7. Colaboração multiagente
+## 7. Relato esperado
 
-- O **orquestrador** coordena a leitura, distribui tarefas delimitadas e centraliza propostas, dúvidas e resultados. Deve impedir alterações concorrentes nos mesmos arquivos.
-- O **agente de banco de dados** propõe o esquema e a migração, sem executar no banco original.
-- O **agente de backend PHP** mantém funções e fluxos existentes e altera apenas os pontos aprovados.
-- O **agente de frontend** apenas acrescenta os controles indispensáveis e não redesenha telas.
-- O **agente de testes/revisão** verifica regressões, escopo, diferença de arquivos e conformidade com este documento.
+Ao concluir cada tarefa, apresentar objetivamente:
 
-Na dúvida, **não implementar por suposição**: apresentar a decisão pendente e pedir orientação.
+- Resultado entregue e arquivos envolvidos.
+- Decisões técnicas relevantes e justificativas.
+- Testes executados e resultados efetivamente observados.
+- Alterações locais pendentes de commit ou publicação.
+- Riscos, limitações e ações que dependem de aprovação.
 
-## 8. Resultado esperado de cada etapa
-
-Ao reportar uma etapa, indicar:
-
-- O que foi analisado ou alterado.
-- Quais arquivos estão envolvidos.
-- Por que cada alteração é necessária.
-- Quais testes foram feitos e seus resultados.
-- Quais riscos, dúvidas ou pendências continuam abertos.
-
-**Princípio final:** acrescentar categorias ao e-commerce do professor, sem transformá-lo em outro sistema.
+**Princípio final:** manter o e-commerce acadêmico simples, funcional e fiel às orientações do professor, permitindo que os agentes executem o trabalho técnico sem ultrapassar a autoridade concedida.
