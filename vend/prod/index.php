@@ -12,7 +12,10 @@ include("../menu.php")
 
 <?php
     $link = mysqli_connect("localhost", "root", "", "sistema");
-    $sql = "SELECT * FROM prod ORDER BY nome"; 
+    $sql = "SELECT prod.nome, prod.preco, prod.id, categoria.categoria
+            FROM prod
+            LEFT JOIN categoria ON prod.categoria_id = categoria.categoria_id
+            ORDER BY prod.nome";
     $result = mysqli_query($link, $sql); 
     echo "<br><br>";
     echo "<table border='1px'>";
@@ -20,6 +23,7 @@ include("../menu.php")
             echo "<th>";
                 echo "Nome";
             echo "</th>";
+            echo "<th>Categoria</th>";
             echo "<th>";
                 echo "Preço";
             echo "<th>";
@@ -33,10 +37,13 @@ include("../menu.php")
         ?>
         <tr>
             <td>
-                <?=$row["nome"];?>
+                <?=htmlspecialchars($row["nome"], ENT_QUOTES, "UTF-8");?>
             </td>
             <td>
-                <?=$row["preco"];?>
+                <?=htmlspecialchars($row["categoria"] ?? "Sem categoria", ENT_QUOTES, "UTF-8");?>
+            </td>
+            <td>
+                <?=htmlspecialchars($row["preco"], ENT_QUOTES, "UTF-8");?>
             </td>
             <td>
                 <a href="/sistema/vend/prod/upd.php?id=<?= $row["id"];?>"
