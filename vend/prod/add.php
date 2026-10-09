@@ -6,7 +6,14 @@ validaSessao();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = trim($_POST["nome"] ?? "");
     $preco = trim($_POST["preco"] ?? "");
-    $categoria_id = filter_input(INPUT_POST, "categoria_id", FILTER_VALIDATE_INT);
+    $categoria_input = $_POST["categoria_id"] ?? "";
+    $categoria_id = null;
+    if ($categoria_input !== "") {
+        $categoria_id = filter_var($categoria_input, FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]);
+        if ($categoria_id === false) {
+            $erro = "Categoria inválida";
+        }
+    }
     if (!$nome){
         $erro = "Nome Vazio";
     }else if(!$preco){
